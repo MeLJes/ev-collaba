@@ -109,23 +109,22 @@ function filterByYears(films, minYear, maxYear) {
 
 // Get amount by genres
 function getAmountByGenres(films) {
-    var holder = [];
     var genreArr = {};
+    var filmGenre;
 
-    var test = films.forEach(function (film) {
-        var filmGenre = film.genre;
+    films.forEach(function (film) {
+        //filmGenre = film.genre;
 
-        //genreArr.filmGenre = 1;
-        if( genreArr.filmGenre ) {
+        genreArr[film.genre] = 0;
 
-        }
+
     });
-
     console.log( genreArr );
-}
-getAmountByGenres(filmsInJSON);
 
-//console.log( getAmountByGenres(filmsInJSON) );
+}
+//getAmountByGenres(filmsInJSON);
+
+console.log( getAmountByGenres(filmsInJSON) );
 
 
 
