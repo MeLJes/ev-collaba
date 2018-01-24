@@ -127,8 +127,29 @@ function getAmountByGenres(films) {
 
 
 // Get total duration
-function getTotalDuration() {
-    var filmsArr = filmsInJSON.slice(0);
+// function getTotalDuration() {
+//     var filmsArr = filmsInJSON.slice(0);
+//     var holder = [];
+//
+//     // Sum function
+//     function getSum(a, b) {
+//         return a + b;
+//     }
+//
+//     // Get all durations
+//     var getTotalDuration = filmsArr.forEach(function (entry) {
+//         holder.push(entry.duration);
+//     });
+//
+//     // Get sum
+//     var totalDuration = holder.reduce(getSum);
+//
+//     console.log('Total duration:', totalDuration);
+// }
+//getTotalDuration();
+
+
+function getTotalDuration(films) {
     var holder = [];
 
     // Sum function
@@ -137,16 +158,14 @@ function getTotalDuration() {
     }
 
     // Get all durations
-    var getTotalDuration = filmsArr.forEach(function (entry) {
-        holder.push(entry.duration);
+    films.forEach(function (film) {
+        holder.push(film.duration);
     });
 
     // Get sum
-    var totalDuration = holder.reduce(getSum);
-
-    console.log('Total duration:', totalDuration);
+    return holder.reduce(getSum);
 }
-//getTotalDuration();
+//getTotalDuration(filmsInJSON);
 
 
 // Get total comments by film
