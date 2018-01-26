@@ -32,40 +32,6 @@ function filterByYears(films, minYear, maxYear) {
 
 
 // Get amount by genres
-// function getAmountByGenres() {
-//     var filmsArr = filmsInJSON.slice(0);
-//     var holder = [];
-//     var genreArr = {};
-//
-//     // Grub all genres
-//     var getAllGenres = filmsArr.forEach(function (entry) {
-//         holder.push(entry.genre);
-//     });
-//
-//     // Get unique genres
-//     var genreHolder = holder.filter(function(item, i, ar) {
-//         // I have no idea about arguments and why they goes in this order
-//         return ar.indexOf(item) === i;
-//     });
-//
-//     // Set new array of genres
-//     for (var i = 0; i < genreHolder.length; i++) {
-//         genreArr[genreHolder[i]] = 0;
-//     }
-//
-//     // Calculates films
-//     for (var el = 0; el < holder.length; el++) {
-//         genreArr[holder[el]]++;
-//     }
-//     // I get a little bit of help, case i don't know, that 'key' = key in arr...)
-//     // I think that one of loop we may pull down...
-//
-//     console.log('Get sum of each genre:', genreArr);
-// }
-// getAmountByGenres();
-
-
-// Get amount by genres
 function getAmountByGenres(films) {
     var genreArr = {};
 
