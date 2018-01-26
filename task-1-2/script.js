@@ -124,3 +124,10 @@ function getRatingByFilmId(films, filmId) {
     return averageRating(ratingSum, ratingCount);
 }
 //getRatingByFilmId(filmsInJSON, 1);
+
+
+// Sort by rating
+function sortByRating(films) {
+
+}
+sortByRating();
