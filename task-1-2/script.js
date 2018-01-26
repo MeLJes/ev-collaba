@@ -124,8 +124,6 @@ function getAmountByGenres(films) {
 //getAmountByGenres(filmsInJSON);
 
 
-
-
 // Get total duration
 // function getTotalDuration() {
 //     var filmsArr = filmsInJSON.slice(0);
@@ -149,6 +147,7 @@ function getAmountByGenres(films) {
 //getTotalDuration();
 
 
+// Get total duration
 function getTotalDuration(films) {
     var holder = [];
 
@@ -169,18 +168,23 @@ function getTotalDuration(films) {
 
 
 // Get total comments by film
-function getTotalCommentsByFilm(filmId) {
-    var filmsArr = filmsInJSON.slice(0);
+function getTotalCommentsByFilm(films, filmId) {
+    return films[filmId].comments.length;
+}
+//getTotalCommentsByFilm(filmsInJSON, 4);
 
-    // Get film by id
-    var getFilmById = filmsArr.forEach(function (entry) {
-        if ( entry.id === filmId ) {
-            return entry.comments.length;
-            console.log(entry.comments.length);
-        }
-        //console.log(entry.comments.length);
+
+// Get comments by author ID
+function getCommentsByAuthorId(films, authorId) {
+    var holder = [];
+
+    films.forEach(function (film) {
+        //holder.push(film.comments[authorId].text);
+
+        holder.push(film.comments[[authorId].text]);
     });
 
-    console.log('Total count of comments in your film is:', getFilmById);
+    return holder;
 }
-//getTotalCommentsByFilm(4);
+//getCommentsByAuthorId(filmsInJSON, 1001);
+console.log( getCommentsByAuthorId(filmsInJSON, 1001) );
