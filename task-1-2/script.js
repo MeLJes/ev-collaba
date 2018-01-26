@@ -95,3 +95,32 @@ function getCommentsByAuthorId(films, authorId) {
     return holder;
 }
 //getCommentsByAuthorId(filmsInJSON, 1001);
+
+
+// Get rating byt film ID
+function getRatingByFilmId(films, filmId) {
+    var ratingCount, ratingSum;
+    var holder = [];
+
+    films.forEach(function (film) {
+        if( film.id === filmId ) {
+            film.comments.forEach(function (rating) {
+                holder.push(rating.rating);
+            });
+        }
+    });
+    ratingCount = holder.length;
+
+    // Get rating sum
+    ratingSum = holder.reduce(function (a, b) {
+        return a + b;
+    });
+
+    // Get average value
+    function averageRating(ratingSum, ratingCount) {
+        return (ratingSum / ratingCount).toFixed(1);
+    }
+
+    return averageRating(ratingSum, ratingCount);
+}
+//getRatingByFilmId(filmsInJSON, 1);
