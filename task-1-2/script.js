@@ -1,4 +1,3 @@
-// Sort by year
 function sortByYear(films) {
     return films.sort(function(a, b) {
         return a.year - b.year;
@@ -7,7 +6,6 @@ function sortByYear(films) {
 //sortByYear(filmsInJSON);
 
 
-// Filter by years
 function filterByYears(films, minYear, maxYear) {
     var argument = arguments.length;
 
@@ -31,7 +29,6 @@ function filterByYears(films, minYear, maxYear) {
 //filterByYears(filmsInJSON, null, 2005);
 
 
-// Get amount by genres
 function getAmountByGenres(films) {
     var genreArr = {};
 
@@ -48,7 +45,6 @@ function getAmountByGenres(films) {
 //getAmountByGenres(filmsInJSON);
 
 
-// Get total duration
 function getTotalDuration(films) {
     var holder = [];
 
@@ -65,7 +61,6 @@ function getTotalDuration(films) {
 //getTotalDuration(filmsInJSON);
 
 
-// Get total comments by film
 function getTotalCommentsByFilm(films, filmId) {
     var holder;
 
@@ -80,7 +75,6 @@ function getTotalCommentsByFilm(films, filmId) {
 //getTotalCommentsByFilm(filmsInJSON, 4);
 
 
-// Get comments by author ID
 function getCommentsByAuthorId(films, authorId) {
     var holder = [];
 
@@ -97,37 +91,140 @@ function getCommentsByAuthorId(films, authorId) {
 //getCommentsByAuthorId(filmsInJSON, 1001);
 
 
-// Get rating byt film ID
-function getRatingByFilmId(films, filmId) {
-    var ratingCount, ratingSum;
-    var holder = [];
+        function getAverageRating(films, filmId) {
+            var ratingCount, ratingSum, getTotalValue, getTotalRating, getTotalRatingParse;
+            var holder = [];
 
-    films.forEach(function (film) {
-        if( film.id === filmId ) {
-            film.comments.forEach(function (rating) {
-                holder.push(rating.rating);
-            });
+            if( !filmId ) {
+                films.forEach(function (film) {
+                    film.comments.forEach(function (rating) {
+                        holder.push(rating.rating);
+                    });
+
+                    ratingCount = holder.length;
+
+                    // Get rating sum
+                    ratingSum = holder.reduce(function (a, b) {
+                        return a + b;
+                    }, 0);
+
+                    // Get average value
+                    function averageRating(ratingSum, ratingCount) {
+                        return (ratingSum / ratingCount).toFixed(1);
+                    }
+                    getTotalValue = averageRating(ratingSum, ratingCount);
+                    getTotalRatingParse = parseFloat(getTotalValue);
+
+                    if ( getTotalRatingParse >= 1 ) {
+                        return getTotalRatingParse;
+                    } else {
+                        return 0;
+                    }
+                });
+            } else {
+                films.forEach(function (film) {
+                    if( film.id === filmId ) {
+                        film.comments.forEach(function (rating) {
+                            holder.push(rating.rating);
+                        });
+                    }
+                });
+                ratingCount = holder.length;
+
+                // Get rating sum
+                ratingSum = holder.reduce(function (a, b) {
+                    return a + b;
+                }, 0);
+
+                // Get average value
+                function averageRating(ratingSum, ratingCount) {
+                    return (ratingSum / ratingCount).toFixed(1);
+                }
+                getTotalRating = averageRating(ratingSum, ratingCount);
+                getTotalRatingParse = parseFloat(getTotalRating);
+
+                if ( getTotalRatingParse >= 1 ) {
+                    return getTotalRatingParse;
+                } else {
+                    return 0;
+                }
+            }
         }
-    });
-    ratingCount = holder.length;
 
-    // Get rating sum
-    ratingSum = holder.reduce(function (a, b) {
-        return a + b;
-    });
 
-    // Get average value
-    function averageRating(ratingSum, ratingCount) {
-        return (ratingSum / ratingCount).toFixed(1);
-    }
+function getRatingByFilmId(films, filmId) {
+    // var ratingCount, ratingSum, getTotalRating, getTotalRatingParse;
+    // var holder = [];
+    //
+    // films.forEach(function (film) {
+    //     if( film.id === filmId ) {
+    //         film.comments.forEach(function (rating) {
+    //             holder.push(rating.rating);
+    //         });
+    //     }
+    // });
+    // ratingCount = holder.length;
+    //
+    // // Get rating sum
+    // ratingSum = holder.reduce(function (a, b) {
+    //     return a + b;
+    // }, 0);
+    //
+    // // Get average value
+    // function averageRating(ratingSum, ratingCount) {
+    //     return (ratingSum / ratingCount).toFixed(1);
+    // }
+    // getTotalRating = averageRating(ratingSum, ratingCount);
+    // getTotalRatingParse = parseFloat(getTotalRating);
+    //
+    // if ( getTotalRatingParse >= 1 ) {
+    //     return getTotalRatingParse;
+    // } else {
+    //     return 0;
+    // }
 
-    return averageRating(ratingSum, ratingCount);
+    getAverageRating(films, filmId);
 }
 //getRatingByFilmId(filmsInJSON, 1);
 
 
-// Sort by rating
 function sortByRating(films) {
+    var ratingHolder = films.map(function (film) {
+        var ratingCount, ratingSum, getTotalValue, getTotalRatingParse;
+        var holder = [];
 
+        film.comments.forEach(function (rating) {
+            holder.push(rating.rating);
+        });
+
+        ratingCount = holder.length;
+
+        // Get rating sum
+        ratingSum = holder.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+
+        // Get average value
+        function averageRating(ratingSum, ratingCount) {
+            return (ratingSum / ratingCount).toFixed(1);
+        }
+        getTotalValue = averageRating(ratingSum, ratingCount);
+        getTotalRatingParse = parseFloat(getTotalValue);
+
+        if ( getTotalRatingParse >= 1 ) {
+            return getTotalRatingParse;
+            //console.log( film, getTotalRatingParse );
+        } else {
+            return 0;
+            //console.log( film, 0 );
+        }
+    });
+
+    console.log( ratingHolder );
+
+    return ratingHolder.sort(function(a, b) {
+        return a.getTotalRatingParse - b.getTotalRatingParse;
+    });
 }
-sortByRating();
+//sortByRating(filmsInJSON);
+//console.log( sortByRating(filmsInJSON) );
