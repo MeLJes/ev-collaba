@@ -184,11 +184,31 @@ function addCommentToFilm(films, filmId, addComment) {
 function updateFilmInfo(films, filmId, parameters) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            
+            film.title = parameters.title;
+            film.genre = parameters.genre;
+            film.director = parameters.director;
+            film.year = parameters.year;
+            film.duration = parameters.duration;
         }
 
         return film;
     });
 }
-// updateFilmInfo(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
-console.log( updateFilmInfo(filmsInJSON, 1, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 }) );
+//updateFilmInfo(filmsInJSON, 1, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 });
+
+
+function updateComment(films, filmAndCommentId, comment) {
+    return films.map(function (film) {
+        if( film.id === filmAndCommentId.filmId ) {
+            film.comments = film.comments.map(function (comments) {
+                if( comments.id === filmAndCommentId.commentId ) {
+                    return comments.text = comment;
+                }
+            });
+        }
+
+        return film;
+    });
+}
+// updateComment(filmsInJSON, { filmId: 1, commentId: 3 }, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 });
+console.log( updateComment(filmsInJSON, { filmId: 1, commentId: 3 }, 'New text comment') );
