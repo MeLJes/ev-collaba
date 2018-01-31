@@ -91,140 +91,104 @@ function getCommentsByAuthorId(films, authorId) {
 //getCommentsByAuthorId(filmsInJSON, 1001);
 
 
-        function getAverageRating(films, filmId) {
-            var ratingCount, ratingSum, getTotalValue, getTotalRating, getTotalRatingParse;
-            var holder = [];
+        function getRating (film) {
+            var ratingCount, ratingSum;
 
-            if( !filmId ) {
-                films.forEach(function (film) {
-                    film.comments.forEach(function (rating) {
-                        holder.push(rating.rating);
-                    });
+            var ratings = film.comments.map(function (comment) {
+                return comment.rating;
+            });
+            ratingCount = ratings.length;
 
-                    ratingCount = holder.length;
+            // Get rating sum
+            ratingSum = ratings.reduce(function (a, b) {
+                return a + b;
+            }, 0);
 
-                    // Get rating sum
-                    ratingSum = holder.reduce(function (a, b) {
-                        return a + b;
-                    }, 0);
-
-                    // Get average value
-                    function averageRating(ratingSum, ratingCount) {
-                        return (ratingSum / ratingCount).toFixed(1);
-                    }
-                    getTotalValue = averageRating(ratingSum, ratingCount);
-                    getTotalRatingParse = parseFloat(getTotalValue);
-
-                    if ( getTotalRatingParse >= 1 ) {
-                        return getTotalRatingParse;
-                    } else {
-                        return 0;
-                    }
-                });
-            } else {
-                films.forEach(function (film) {
-                    if( film.id === filmId ) {
-                        film.comments.forEach(function (rating) {
-                            holder.push(rating.rating);
-                        });
-                    }
-                });
-                ratingCount = holder.length;
-
-                // Get rating sum
-                ratingSum = holder.reduce(function (a, b) {
-                    return a + b;
-                }, 0);
-
-                // Get average value
-                function averageRating(ratingSum, ratingCount) {
-                    return (ratingSum / ratingCount).toFixed(1);
-                }
-                getTotalRating = averageRating(ratingSum, ratingCount);
-                getTotalRatingParse = parseFloat(getTotalRating);
-
-                if ( getTotalRatingParse >= 1 ) {
-                    return getTotalRatingParse;
-                } else {
-                    return 0;
-                }
-            }
+            // Get average value
+            return ratingCount
+                ? parseFloat((ratingSum / ratingCount).toFixed(1))
+                : 0;
         }
 
 
 function getRatingByFilmId(films, filmId) {
-    // var ratingCount, ratingSum, getTotalRating, getTotalRatingParse;
-    // var holder = [];
-    //
-    // films.forEach(function (film) {
-    //     if( film.id === filmId ) {
-    //         film.comments.forEach(function (rating) {
-    //             holder.push(rating.rating);
-    //         });
-    //     }
-    // });
-    // ratingCount = holder.length;
-    //
-    // // Get rating sum
-    // ratingSum = holder.reduce(function (a, b) {
-    //     return a + b;
-    // }, 0);
-    //
-    // // Get average value
-    // function averageRating(ratingSum, ratingCount) {
-    //     return (ratingSum / ratingCount).toFixed(1);
-    // }
-    // getTotalRating = averageRating(ratingSum, ratingCount);
-    // getTotalRatingParse = parseFloat(getTotalRating);
-    //
-    // if ( getTotalRatingParse >= 1 ) {
-    //     return getTotalRatingParse;
-    // } else {
-    //     return 0;
-    // }
+    var rating = 0;
 
-    getAverageRating(films, filmId);
+    films.forEach(function (film) {
+        if( film.id === filmId ) {
+            rating = getRating(film);
+        }
+    });
+
+    return rating;
 }
 //getRatingByFilmId(filmsInJSON, 1);
 
 
 function sortByRating(films) {
-    var ratingHolder = films.map(function (film) {
-        var ratingCount, ratingSum, getTotalValue, getTotalRatingParse;
-        var holder = [];
-
-        film.comments.forEach(function (rating) {
-            holder.push(rating.rating);
-        });
-
-        ratingCount = holder.length;
-
-        // Get rating sum
-        ratingSum = holder.reduce(function (a, b) {
-            return a + b;
-        }, 0);
-
-        // Get average value
-        function averageRating(ratingSum, ratingCount) {
-            return (ratingSum / ratingCount).toFixed(1);
-        }
-        getTotalValue = averageRating(ratingSum, ratingCount);
-        getTotalRatingParse = parseFloat(getTotalValue);
-
-        if ( getTotalRatingParse >= 1 ) {
-            return getTotalRatingParse;
-            //console.log( film, getTotalRatingParse );
-        } else {
-            return 0;
-            //console.log( film, 0 );
-        }
-    });
-
-    console.log( ratingHolder );
-
-    return ratingHolder.sort(function(a, b) {
-        return a.getTotalRatingParse - b.getTotalRatingParse;
-    });
+    return films.sort(function (filmA, filmB) {
+        return getRating(filmB) - getRating(filmA);
+    })
 }
 //sortByRating(filmsInJSON);
-//console.log( sortByRating(filmsInJSON) );
+
+
+function removeFilm(films, filmId) {
+    return films.filter(function (film) {
+        return film.id !== filmId;
+    });
+}
+//removeFilm(filmsInJSON, 1);
+
+
+function removeComment(films, filmId, commentId) {
+    return films.map(function (film) {
+        if( film.id === filmId ) {
+            film.comments = film.comments.filter(function (comments) {
+                return comments.id !== commentId;
+            });
+        }
+
+        return film;
+    });
+}
+//removeComment(filmsInJSON, 1, 5);
+
+
+function addFilm(films, newFilm) {
+    var filmsCopy = films.slice(0);
+    newFilm.id = films.length + 1;
+    newFilm.comments = [];
+
+    filmsCopy.push(newFilm);
+    return filmsCopy;
+}
+// addFilm(addFilm(filmsInJSON, { title: 'New Film', genre: 'documentary', director: 'Me lol', year: 2018, duration: 120 } ));
+
+
+function addCommentToFilm(films, filmId, addComment) {
+    var filmsCopy = films.slice(0);
+
+    return filmsCopy.map(function (film) {
+        if( film.id === filmId ) {
+            addComment.id = film.comments.length + 1;
+            film.comments.push(addComment);
+        }
+
+        return film;
+    });
+}
+//addCommentToFilm(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
+
+
+function updateFilmInfo(films, filmId, parameters) {
+    return films.map(function (film) {
+        if( film.id === filmId ) {
+            
+        }
+
+        return film;
+    });
+}
+// updateFilmInfo(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
+console.log( updateFilmInfo(filmsInJSON, 1, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 }) );
