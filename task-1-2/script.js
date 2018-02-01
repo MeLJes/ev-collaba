@@ -3,7 +3,7 @@ function sortByYear(films) {
         return a.year - b.year;
     });
 }
-//sortByYear(filmsInJSON);
+// sortByYear(filmsInJSON);
 
 
 function filterByYears(films, minYear, maxYear) {
@@ -26,7 +26,7 @@ function filterByYears(films, minYear, maxYear) {
         return film.year <= maxYear;
     });
 }
-//filterByYears(filmsInJSON, null, 2005);
+// filterByYears(filmsInJSON, null, 2005);
 
 
 function getAmountByGenres(films) {
@@ -42,7 +42,7 @@ function getAmountByGenres(films) {
 
     return genreArr;
 }
-//getAmountByGenres(filmsInJSON);
+// getAmountByGenres(filmsInJSON);
 
 
 function getTotalDuration(films) {
@@ -58,7 +58,7 @@ function getTotalDuration(films) {
         return a + b;
     });
 }
-//getTotalDuration(filmsInJSON);
+// getTotalDuration(filmsInJSON);
 
 
 function getTotalCommentsByFilm(films, filmId) {
@@ -72,7 +72,7 @@ function getTotalCommentsByFilm(films, filmId) {
 
     return holder;
 }
-//getTotalCommentsByFilm(filmsInJSON, 4);
+// getTotalCommentsByFilm(filmsInJSON, 4);
 
 
 function getCommentsByAuthorId(films, authorId) {
@@ -88,7 +88,7 @@ function getCommentsByAuthorId(films, authorId) {
 
     return holder;
 }
-//getCommentsByAuthorId(filmsInJSON, 1001);
+// getCommentsByAuthorId(filmsInJSON, 1001);
 
 
         function getRating (film) {
@@ -122,7 +122,7 @@ function getRatingByFilmId(films, filmId) {
 
     return rating;
 }
-//getRatingByFilmId(filmsInJSON, 1);
+// getRatingByFilmId(filmsInJSON, 1);
 
 
 function sortByRating(films) {
@@ -130,7 +130,7 @@ function sortByRating(films) {
         return getRating(filmB) - getRating(filmA);
     })
 }
-//sortByRating(filmsInJSON);
+// sortByRating(filmsInJSON);
 
 
 function removeFilm(films, filmId) {
@@ -138,7 +138,7 @@ function removeFilm(films, filmId) {
         return film.id !== filmId;
     });
 }
-//removeFilm(filmsInJSON, 1);
+// removeFilm(filmsInJSON, 1);
 
 
 function removeComment(films, filmId, commentId) {
@@ -152,7 +152,7 @@ function removeComment(films, filmId, commentId) {
         return film;
     });
 }
-//removeComment(filmsInJSON, 1, 5);
+// removeComment(filmsInJSON, 1, 5);
 
 
 function addFilm(films, newFilm) {
@@ -167,9 +167,7 @@ function addFilm(films, newFilm) {
 
 
 function addCommentToFilm(films, filmId, addComment) {
-    var filmsCopy = films.slice(0);
-
-    return filmsCopy.map(function (film) {
+    return films.map(function (film) {
         if( film.id === filmId ) {
             addComment.id = film.comments.length + 1;
             film.comments.push(addComment);
@@ -178,31 +176,31 @@ function addCommentToFilm(films, filmId, addComment) {
         return film;
     });
 }
-//addCommentToFilm(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
+// addCommentToFilm(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
 
 
 function updateFilmInfo(films, filmId, parameters) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            film.title = parameters.title;
-            film.genre = parameters.genre;
-            film.director = parameters.director;
-            film.year = parameters.year;
-            film.duration = parameters.duration;
+            parameters.title ? film.title = parameters.title : false;
+            parameters.genre ? film.genre = parameters.genre : false;
+            parameters.director ? film.director = parameters.director : false;
+            parameters.year ? film.year = parameters.year : false;
+            parameters.duration ? film.duration = parameters.duration : false;
         }
 
         return film;
     });
 }
-//updateFilmInfo(filmsInJSON, 1, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 });
+// updateFilmInfo(filmsInJSON, 1, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 });
 
 
-function updateComment(films, filmAndCommentId, comment) {
+function updateComment(films, filmAndCommentId, newComment) {
     return films.map(function (film) {
         if( film.id === filmAndCommentId.filmId ) {
-            film.comments = film.comments.map(function (comments) {
-                if( comments.id === filmAndCommentId.commentId ) {
-                    return comments.text = comment;
+            film.comments.forEach(function (comment) {
+                if( comment.id === filmAndCommentId.commentId ) {
+                    return comment.text = newComment;
                 }
             });
         }
@@ -210,5 +208,4 @@ function updateComment(films, filmAndCommentId, comment) {
         return film;
     });
 }
-// updateComment(filmsInJSON, { filmId: 1, commentId: 3 }, { title: 'New Film Name', genre: 'drama', director: 'Me lol', year: 2018, duration: 120 });
-console.log( updateComment(filmsInJSON, { filmId: 1, commentId: 3 }, 'New text comment') );
+// updateComment(filmsInJSON, { filmId: 1, commentId: 3 }, 'New text comment');
