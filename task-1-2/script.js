@@ -30,33 +30,19 @@ function filterByYears(films, minYear, maxYear) {
 
 
 function getAmountByGenres(films) {
-    var genreArr = {};
+    return films.reduce(function (totalAmount, film) {
+        totalAmount[film.genre] ? totalAmount[film.genre]++ : totalAmount[film.genre] = 1;
 
-    films.forEach(function (film) {
-        if( !genreArr[film.genre] ) {
-            genreArr[film.genre] = 1;
-        } else {
-            genreArr[film.genre]++;
-        }
-    });
-
-    return genreArr;
+        return totalAmount;
+    }, {} )
 }
 // getAmountByGenres(filmsInJSON);
 
 
 function getTotalDuration(films) {
-    var holder = [];
-
-    // Get all durations
-    films.forEach(function (film) {
-        holder.push(film.duration);
-    });
-
-    // Get sum
-    return holder.reduce(function (a, b) {
-        return a + b;
-    });
+    return films.reduce(function (counter, film) {
+        return counter + film.duration;
+    }, 0);
 }
 // getTotalDuration(filmsInJSON);
 
@@ -76,17 +62,13 @@ function getTotalCommentsByFilm(films, filmId) {
 
 
 function getCommentsByAuthorId(films, authorId) {
-    var holder = [];
-
-    films.forEach(function (film) {
-        film.comments.forEach(function (comment) {
-            if( comment.authorId === authorId ) {
-                holder.push(comment);
-            }
-        });
-    });
-
-    return holder;
+    return films.reduce(function (comments, film) {
+        return comments.concat(
+            film.comments.filter(function (comment) {
+                return comment.authorId === authorId;
+            })
+        )
+    }, []);
 }
 // getCommentsByAuthorId(filmsInJSON, 1001);
 
@@ -105,9 +87,7 @@ function getCommentsByAuthorId(films, authorId) {
             }, 0);
 
             // Get average value
-            return ratingCount
-                ? parseFloat((ratingSum / ratingCount).toFixed(1))
-                : 0;
+            return ratingCount ? parseFloat((ratingSum / ratingCount).toFixed(1)) : 0;
         }
 
 
@@ -182,11 +162,11 @@ function addCommentToFilm(films, filmId, addComment) {
 function updateFilmInfo(films, filmId, parameters) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            parameters.title ? film.title = parameters.title : false;
-            parameters.genre ? film.genre = parameters.genre : false;
-            parameters.director ? film.director = parameters.director : false;
-            parameters.year ? film.year = parameters.year : false;
-            parameters.duration ? film.duration = parameters.duration : false;
+            film.title = parameters.title || film.title;
+            film.genre = parameters.genre || film.genre;
+            film.director = parameters.director || film.director;
+            film.year = parameters.year || film.year;
+            film.duration = parameters.duration || film.duration;
         }
 
         return film;
@@ -200,7 +180,7 @@ function updateComment(films, filmAndCommentId, newComment) {
         if( film.id === filmAndCommentId.filmId ) {
             film.comments.forEach(function (comment) {
                 if( comment.id === filmAndCommentId.commentId ) {
-                    return comment.text = newComment;
+                    comment.text = newComment;
                 }
             });
         }
