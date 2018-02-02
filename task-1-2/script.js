@@ -46,9 +46,11 @@ function getTotalDuration(films) {
 
 
 function getTotalCommentsByFilm(films, filmId) {
-    return films.find(function (film) {
+    var getFilm = films.find(function (film) {
        return film.id === filmId;
     });
+
+    return getFilm.comments.length;
 }
 // getTotalCommentsByFilm(filmsInJSON, 4);
 
