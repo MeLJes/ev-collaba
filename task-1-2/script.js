@@ -7,14 +7,14 @@ function sortByYear(films) {
 
 
 function filterByYears(films, minYear, maxYear) {
-    var argument = arguments.length;
-
-    if( argument === 1 ) {
-        return films;
-    }
-    if( argument === 2 ) {
+    if( minYear && !maxYear ) {
         return films.filter(function (film) {
             return film.year >= minYear;
+        });
+    }
+    if( !minYear && maxYear ) {
+        return films.filter(function (film) {
+            return film.year <= maxYear;
         });
     }
     if( minYear && maxYear ) {
@@ -22,9 +22,7 @@ function filterByYears(films, minYear, maxYear) {
             return film.year >= minYear && film.year <= maxYear;
         });
     }
-    return films.filter(function (film) {
-        return film.year <= maxYear;
-    });
+    return films;
 }
 // filterByYears(filmsInJSON, null, 2005);
 
@@ -48,15 +46,9 @@ function getTotalDuration(films) {
 
 
 function getTotalCommentsByFilm(films, filmId) {
-    var holder;
-
-    films.forEach(function (film) {
-        if( film.id === filmId ) {
-            holder = film.comments.length;
-        }
+    return films.find(function (film) {
+       return film.id === filmId;
     });
-
-    return holder;
 }
 // getTotalCommentsByFilm(filmsInJSON, 4);
 
@@ -74,33 +66,26 @@ function getCommentsByAuthorId(films, authorId) {
 
 
         function getRating (film) {
-            var ratingCount, ratingSum;
-
             var ratings = film.comments.map(function (comment) {
                 return comment.rating;
             });
-            ratingCount = ratings.length;
 
             // Get rating sum
-            ratingSum = ratings.reduce(function (a, b) {
+            var ratingSum = ratings.reduce(function (a, b) {
                 return a + b;
             }, 0);
 
             // Get average value
-            return ratingCount ? parseFloat((ratingSum / ratingCount).toFixed(1)) : 0;
+            return ratings.length ? parseFloat((ratingSum / ratings.length).toFixed(1)) : 0;
         }
 
 
 function getRatingByFilmId(films, filmId) {
-    var rating = 0;
-
-    films.forEach(function (film) {
-        if( film.id === filmId ) {
-            rating = getRating(film);
-        }
+    var findingFilm = films.find(function (film) {
+        return film.id === filmId;
     });
 
-    return rating;
+    return getRating(findingFilm);
 }
 // getRatingByFilmId(filmsInJSON, 1);
 
@@ -146,11 +131,11 @@ function addFilm(films, newFilm) {
 // addFilm(addFilm(filmsInJSON, { title: 'New Film', genre: 'documentary', director: 'Me lol', year: 2018, duration: 120 } ));
 
 
-function addCommentToFilm(films, filmId, addComment) {
+function addCommentToFilm(films, filmId, comment) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            addComment.id = film.comments.length + 1;
-            film.comments.push(addComment);
+            comment.id = film.comments.length + 1;
+            film.comments.push(comment);
         }
 
         return film;
@@ -159,14 +144,14 @@ function addCommentToFilm(films, filmId, addComment) {
 // addCommentToFilm(filmsInJSON, 1, { authorId: '1001', authorName: 'Wally', text: 'Olololo', rating: 4 });
 
 
-function updateFilmInfo(films, filmId, parameters) {
+function updateFilmInfo(films, filmId, params) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            film.title = parameters.title || film.title;
-            film.genre = parameters.genre || film.genre;
-            film.director = parameters.director || film.director;
-            film.year = parameters.year || film.year;
-            film.duration = parameters.duration || film.duration;
+            film.title = params.title || film.title;
+            film.genre = params.genre || film.genre;
+            film.director = params.director || film.director;
+            film.year = params.year || film.year;
+            film.duration = params.duration || film.duration;
         }
 
         return film;
