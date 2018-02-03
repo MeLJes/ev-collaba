@@ -163,10 +163,12 @@ function updateFilmInfo(films, filmId, params) {
 function updateComment(films, filmAndCommentId, newComment) {
     return films.map(function (film) {
         if( film.id === filmAndCommentId.filmId ) {
-            film.comments.forEach(function (comment) {
+            film.comments = film.comments.map(function (comment) {
                 if( comment.id === filmAndCommentId.commentId ) {
                     comment.text = newComment;
                 }
+
+                return comment;
             });
         }
 
