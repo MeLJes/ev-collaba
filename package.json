@@ -1,0 +1,22 @@
+{
+  "name": "ev-collaba",
+  "version": "1.0.0",
+  "description": "JS basic",
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MeLJes/ev-collaba.git"
+  },
+  "author": "MeLJes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MeLJes/ev-collaba/issues"
+  },
+  "homepage": "https://github.com/MeLJes/ev-collaba#readme",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^3.9.1"
+  }
+}
