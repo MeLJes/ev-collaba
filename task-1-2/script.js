@@ -149,11 +149,9 @@ function addCommentToFilm(films, filmId, comment) {
 function updateFilmInfo(films, filmId, params) {
     return films.map(function (film) {
         if( film.id === filmId ) {
-            film.title = params.title || film.title;
-            film.genre = params.genre || film.genre;
-            film.director = params.director || film.director;
-            film.year = params.year || film.year;
-            film.duration = params.duration || film.duration;
+            Object.keys(params).forEach(function (key) {
+                film[key] = params[key] || film[key];
+            });
         }
 
         return film;
@@ -165,10 +163,12 @@ function updateFilmInfo(films, filmId, params) {
 function updateComment(films, filmAndCommentId, newComment) {
     return films.map(function (film) {
         if( film.id === filmAndCommentId.filmId ) {
-            film.comments.forEach(function (comment) {
+            film.comments = film.comments.map(function (comment) {
                 if( comment.id === filmAndCommentId.commentId ) {
                     comment.text = newComment;
                 }
+
+                return comment;
             });
         }
 
