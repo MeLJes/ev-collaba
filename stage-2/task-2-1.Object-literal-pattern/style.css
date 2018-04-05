@@ -72,12 +72,14 @@ h1,
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  max-width: 600px;
 }
 .person {
   background: #ffffff;
   border: 1px solid #ff4e50;
   border-radius: 35px;
   padding: 10px 50px 10px 40px;
+  margin: 0 10px;
   position: relative;
 }
 .remove {
