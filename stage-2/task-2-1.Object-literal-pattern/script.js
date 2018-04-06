@@ -2,19 +2,18 @@
 	let people = {
 		people: [],
 		init: function() {
-			this.cashElements();
+			this.cacheElements();
 			this.bindEvents();
 			this.render();
 		},
-		cashElements: function() {
+		cacheElements: function() {
 			this.formInput = document.querySelector('.personName');
 			this.formButton = document.querySelector('.addPerson');
 			this.persons = document.querySelector('.persons');
-			this.personRemove = document.querySelector('.remove');
 		},
 		bindEvents: function() {
 			this.formButton.addEventListener('click', this.addPerson.bind(this));
-			this.formButton.addEventListener('click', this.removePerson.bind(this));
+			this.persons.addEventListener('click', this.removePerson.bind(this));
 		},
 		render: function() {
 			let personsList = this.people.map(function(person) {
@@ -27,11 +26,22 @@
 			this.persons.innerHTML = personsList;
 		},
 		addPerson: function() {
-			this.people.push(this.formInput.value);
-			this.render();
-			this.formInput.value = '';
+			if (this.formInput.value.length) {
+				this.people.push(this.formInput.value);
+				this.render();
+				this.formInput.value = '';
+			}
 		},
-		removePerson: function () {
+		removePerson: function (event) {
+			if (event.target && event.target.classList.contains('remove')) {
+				let item = event.target.closest('li');
+				let personaName = item.innerText.trim();
+
+				this.people = this.people.filter(function(person) {
+					return person !== personaName;
+				});
+				this.render();
+			}
 
 		}
 	};
