@@ -7,9 +7,9 @@ let people = (function () {
 	formButton.addEventListener('click', addPerson);
 	persons.addEventListener('click', removePerson);
 
-	render();
+	_render();
 
-	function render() {
+	function _render() {
 		let personsList = people.map(function (person) {
 			return `<li class="person">
 					${person}
@@ -24,7 +24,7 @@ let people = (function () {
 								? person
 								: formInput.value;
 		people.push(name);
-		render();
+		_render();
 		formInput.value = '';
 	}
 	function removePerson(event) {
@@ -35,7 +35,7 @@ let people = (function () {
 			people = people.filter(function (person) {
 				return person !== personaName;
 			});
-			render();
+			_render();
 		}
 	}
 
