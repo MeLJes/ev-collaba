@@ -20,10 +20,18 @@ let people = (function () {
 		persons.innerHTML = personsList;
 	}
 	function addPerson(person) {
-		var name = (formInput.value.length && typeof person === 'string')
-								? person
-								: formInput.value;
-		people.push(name);
+		let name = '';
+		if (typeof person === 'string' && person.length) {
+			name = person;
+		}
+		if (formInput.value !== '' && formInput.value.length) {
+			name = formInput.value;
+		}
+		if (name.length) {
+			people.push(name);
+		} else {
+			console.warn('Enter name!');
+		}
 		_render();
 		formInput.value = '';
 	}
