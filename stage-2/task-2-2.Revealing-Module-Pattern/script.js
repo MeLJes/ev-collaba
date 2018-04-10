@@ -23,8 +23,7 @@ let people = (function () {
 		let name = '';
 		if (typeof person === 'string' && person.length) {
 			name = person;
-		}
-		if (formInput.value !== '' && formInput.value.length) {
+		} else if (formInput.value.length) {
 			name = formInput.value;
 		}
 		if (name.length) {
