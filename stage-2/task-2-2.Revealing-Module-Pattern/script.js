@@ -1,8 +1,8 @@
 let people = (function () {
 	let people = [],
-			formInput = document.querySelector('.personName');
-			formButton = document.querySelector('.addPerson');
-			persons = document.querySelector('.persons');
+		formInput = document.querySelector('.personName');
+	formButton = document.querySelector('.addPerson');
+	persons = document.querySelector('.persons');
 
 	formButton.addEventListener('click', addPerson);
 	persons.addEventListener('click', removePerson);
@@ -20,20 +20,15 @@ let people = (function () {
 		persons.innerHTML = personsList;
 	}
 	function addPerson(person) {
-		let name = '';
-		if (typeof person === 'string' && person.length) {
-			name = person;
-		}
-		if (formInput.value !== '' && formInput.value.length) {
-			name = formInput.value;
-		}
+		let name = person || formInput.value;
+
 		if (name.length) {
 			people.push(name);
+			_render();
+			formInput.value = '';
 		} else {
 			console.warn('Enter name!');
 		}
-		_render();
-		formInput.value = '';
 	}
 	function removePerson(event) {
 		if (event.target && event.target.classList.contains('remove')) {
