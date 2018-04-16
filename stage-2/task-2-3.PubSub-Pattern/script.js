@@ -19,7 +19,7 @@ let people = (function () {
 
 		persons.innerHTML = personsList;
 
-		events.emit('peopleChanged', people.length);
+		window.events.emit('peopleChanged', people.length);
 	}
 	function addPerson(person) {
 		let name = person || formInput.value;
