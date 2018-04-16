@@ -110,3 +110,12 @@ h1,
 .remove::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
+
+.stats {
+  border-bottom: 1px solid #d8d8d8;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  padding-bottom: 50px;
+  margin: 0 auto 50px;
+}
