@@ -1,0 +1,121 @@
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+body::before {
+  content: '';
+  display: block;
+  background: url('bg.png');
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
+
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+input,
+button {
+  border: none;
+  background: none;
+  outline: none;
+  text-align: center;
+  line-height: 35px;
+}
+button {
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.addPerson {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff4e50+0,f9d423+100 */
+  background: #ff4e50; /* Old browsers */
+  background: -moz-linear-gradient(left, #ff4e50 0%, #f9d423 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #ff4e50 0%,#f9d423 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #ff4e50 0%,#f9d423 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4e50', endColorstr='#f9d423',GradientType=1 ); /* IE6-9 */
+
+  border-radius: 35px;
+  color: #ffffff;
+  width: 150px;
+}
+.personName {
+  border-bottom: 1px solid #ff4e50;
+  margin-right: 20px;
+}
+.holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+h1,
+.form {
+  margin-bottom: 50px;
+}
+.persons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+}
+.person {
+  background: #ffffff;
+  border: 1px solid #ff4e50;
+  border-radius: 35px;
+  padding: 10px 50px 10px 40px;
+  margin: 0 10px;
+  position: relative;
+}
+.remove {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+
+  position: absolute;
+  top: 50%;
+  right: 10px;
+}
+.remove::before,
+.remove::after {
+  content: '';
+  display: block;
+  background: #222222;
+  width: 15px;
+  height: 1px;
+  transform: translate(-50%, -50%) rotate(0);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.remove::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.remove::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.stats {
+  border-bottom: 1px solid #d8d8d8;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  padding-bottom: 50px;
+  margin: 0 auto 50px;
+}
