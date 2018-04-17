@@ -1,4 +1,4 @@
-let events = {
+window.events = {
   events: {},
   on: function (eventName, fn) {
     this.events[eventName] = this.events[eventName] || [];

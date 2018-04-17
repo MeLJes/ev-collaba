@@ -12,9 +12,9 @@ let people = (function () {
 	function _render() {
 		let personsList = people.map(function (person) {
 			return `<li class="person">
-					${person}
-					<button type="button" class="remove"></button>
-				</li>`;
+				${person}
+				<button type="button" class="remove"></button>
+			</li>`;
 		}).join('');
 
 		persons.innerHTML = personsList;
@@ -22,7 +22,7 @@ let people = (function () {
 		window.events.emit('peopleChanged', people.length);
 	}
 	function addPerson(person) {
-		let name = person || formInput.value;
+		let name = formInput.value || person;
 
 		if (name.length) {
 			people.push(name);
